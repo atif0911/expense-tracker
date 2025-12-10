@@ -1,0 +1,303 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+/* =========================================
+   1. COLOR VARIABLES (THEME CONFIG)
+   ========================================= */
+:root {
+  /* Light Mode (Default) */
+  --bg-color: #ffffff;
+  --text-main: #333333;
+  --text-secondary: #828282;
+  
+  --card-bg: #ffffff;        /* Background for summary/inputs */
+  --item-bg: #f4f4f4;        /* Background for transaction list items */
+  
+  --border-color: #e6e6e6;
+  --input-bg: #ffffff;
+  
+  --btn-bg: #000000;
+  --btn-text: #ffffff;
+  
+  --shadow: rgba(0, 0, 0, 0.12);
+  --filter-btn-border: #ccc;
+  --filter-btn-hover: #f0f0f0;
+}
+
+[data-theme='dark'] {
+  /* Dark Mode Overrides */
+  --bg-color: #121212;       /* Very dark gray background */
+  --text-main: #e0e0e0;      /* Off-white text */
+  --text-secondary: #a0a0a0;
+  
+  --card-bg: #1e1e1e;        /* Dark gray for cards */
+  --item-bg: #2d2d2d;        /* Slightly lighter for list items */
+  
+  --border-color: #333333;
+  --input-bg: #2d2d2d;
+  
+  --btn-bg: #f4f4f4;         /* White buttons */
+  --btn-text: #000000;       /* Black text on buttons */
+  
+  --shadow: rgba(255, 255, 255, 0.05); /* Very subtle white glow */
+  --filter-btn-border: #555;
+  --filter-btn-hover: #333;
+}
+
+/* =========================================
+   2. GLOBAL RESETS & BODY
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  /* Smooth transition when toggling */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+p {
+  line-height: 1.7;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  line-height: 2.2;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* =========================================
+   3. HEADER
+   ========================================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 60px;
+}
+
+.header ul {
+  display: flex;
+  align-items: center;
+}
+
+.header ul li {
+  margin-left: 20px;
+}
+
+.header ul li a {
+  display: flex;
+  align-items: center;
+  color: var(--text-main);
+}
+
+.header ul li a:hover {
+  color: var(--text-secondary);
+}
+
+.header ul li a svg {
+  margin-right: 5px;
+}
+
+/* =========================================
+   4. GENERAL UI ELEMENTS
+   ========================================= */
+.heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  padding: 0 20px;
+}
+
+.heading p {
+  color: var(--text-secondary);
+}
+
+.form,
+.content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  
+  /* Theme Support */
+  background-color: var(--input-bg);
+  color: var(--text-main);
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 1px solid var(--btn-bg);
+  border-radius: 5px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.btn svg {
+  margin-right: 8px;
+}
+
+.btn-block {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.btn:hover {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   5. TRANSACTIONS
+   ========================================= */
+.transaction-item {
+  background-color: var(--item-bg); /* Updated to variable */
+  color: var(--text-main);
+  margin: 10px 0;
+  padding: 10px 20px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Green border for Income */
+.transaction-item.income {
+  border-right: 5px solid #2ecc71;
+}
+
+/* Red border for Expense */
+.transaction-item.expense {
+  border-right: 5px solid #c0392b;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  margin-left: 10px;
+  cursor: pointer; /* Added cursor pointer */
+}
+
+/* =========================================
+   6. SUMMARY CARD
+   ========================================= */
+.summary-container {
+  background-color: var(--card-bg); /* Updated to variable */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px var(--shadow), 0 1px 2px var(--shadow);
+  text-align: center;
+  border: 1px solid var(--border-color); /* Added border for better dark mode visibility */
+}
+
+.inc-exp-container {
+  background-color: var(--card-bg); /* Updated to variable */
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.inc-exp-container > div {
+  flex: 1;
+  text-align: center;
+}
+
+.money {
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.money.plus {
+  color: #2ecc71;
+}
+
+.money.minus {
+  color: #c0392b;
+}
+
+/* =========================================
+   7. FILTER BUTTONS
+   ========================================= */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.filter-buttons button {
+  background: none;
+  border: 1px solid var(--filter-btn-border);
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  color: var(--text-main); /* Ensure text is visible in dark mode */
+}
+
+.filter-buttons button:hover {
+  background-color: var(--filter-btn-hover);
+}
+
+.filter-buttons button.active {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-bg);
+}
