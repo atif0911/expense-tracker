@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
+const cors = require("cors");
 
 const connectDB = require("./config/db");
 const transactions = require("./routes/transaction");
@@ -11,6 +12,12 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.use(
+  cors({
+    origin: "https://expense-tracker-tau-inky.vercel.app",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
