@@ -8,36 +8,36 @@
   --bg-color: #ffffff;
   --text-main: #333333;
   --text-secondary: #828282;
-  
-  --card-bg: #ffffff;        /* Background for summary/inputs */
-  --item-bg: #f4f4f4;        /* Background for transaction list items */
-  
+
+  --card-bg: #ffffff; /* Background for summary/inputs */
+  --item-bg: #f4f4f4; /* Background for transaction list items */
+
   --border-color: #e6e6e6;
   --input-bg: #ffffff;
-  
+
   --btn-bg: #000000;
   --btn-text: #ffffff;
-  
+
   --shadow: rgba(0, 0, 0, 0.12);
   --filter-btn-border: #ccc;
   --filter-btn-hover: #f0f0f0;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* Dark Mode Overrides */
-  --bg-color: #121212;       /* Very dark gray background */
-  --text-main: #e0e0e0;      /* Off-white text */
+  --bg-color: #121212; /* Very dark gray background */
+  --text-main: #e0e0e0; /* Off-white text */
   --text-secondary: #a0a0a0;
-  
-  --card-bg: #1e1e1e;        /* Dark gray for cards */
-  --item-bg: #2d2d2d;        /* Slightly lighter for list items */
-  
+
+  --card-bg: #1e1e1e; /* Dark gray for cards */
+  --item-bg: #2d2d2d; /* Slightly lighter for list items */
+
   --border-color: #333333;
   --input-bg: #2d2d2d;
-  
-  --btn-bg: #f4f4f4;         /* White buttons */
-  --btn-text: #000000;       /* Black text on buttons */
-  
+
+  --btn-bg: #f4f4f4; /* White buttons */
+  --btn-text: #000000; /* Black text on buttons */
+
   --shadow: rgba(255, 255, 255, 0.05); /* Very subtle white glow */
   --filter-btn-border: #555;
   --filter-btn-hover: #333;
@@ -78,7 +78,9 @@ li {
   line-height: 2.2;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-weight: 600;
   margin-bottom: 10px;
   color: var(--text-main);
@@ -160,7 +162,7 @@ h1, h2, h3 {
   border-radius: 5px;
   margin-bottom: 10px;
   font-family: inherit;
-  
+
   /* Theme Support */
   background-color: var(--input-bg);
   color: var(--text-main);
@@ -300,4 +302,98 @@ h1, h2, h3 {
   background-color: var(--btn-bg);
   color: var(--btn-text);
   border-color: var(--btn-bg);
+}
+
+/* =========================================
+   8. MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* 1. Reset Widths */
+  .container {
+    padding: 0 15px; /* Smaller side padding */
+  }
+
+  /* Make forms and content take full width on phone */
+  .form,
+  .content {
+    width: 100%;
+  }
+
+  /* 2. Header Adjustments */
+  .header {
+    flex-direction: column; /* Stack Logo and Nav */
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+  }
+
+  .header ul {
+    width: 100%;
+    justify-content: space-between; /* Spread nav items evenly */
+    padding: 0 10px;
+  }
+
+  .header ul li {
+    margin-left: 0; /* Remove left margin since we justify-between */
+  }
+
+  /* 3. Typography Tweaks */
+  .heading {
+    font-size: 1.5rem; /* Smaller title */
+    margin-bottom: 30px;
+  }
+
+  .heading h1 {
+    font-size: 1.8rem;
+  }
+
+  /* 4. Filter Buttons */
+  /* Allow buttons to wrap to a second line if the screen is very narrow */
+  .filter-buttons {
+    flex-wrap: wrap;
+  }
+
+  .filter-buttons button {
+    font-size: 0.75rem; /* Slightly smaller text */
+    padding: 5px 10px;
+    flex: 1 1 auto; /* Grow to fill space */
+  }
+
+  /* 5. Transaction Item */
+  .transaction-item {
+    padding: 10px 15px;
+  }
+
+  .transaction-item h4 {
+    font-size: 0.95rem; /* Prevent long text from breaking layout */
+    max-width: 160px; /* Limit text width */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add "..." if text is too long */
+  }
+
+  .transaction-item span {
+    font-size: 0.9rem;
+  }
+
+  /* 6. Summary Card */
+  .money {
+    font-size: 1.2rem;
+  }
+}
+
+/* =========================================
+   9. EXTRA SMALL SCREENS (Small Phones)
+   ========================================= */
+@media (max-width: 380px) {
+  /* Stack the Income/Expense side-by-side view to top-down */
+  /* (Optional: Only if it feels too cramped) */
+  .inc-exp-container {
+    gap: 10px;
+  }
+
+  .header ul li a {
+    font-size: 0.9rem; /* Smaller nav text */
+  }
 }
