@@ -8,6 +8,7 @@ import {
 import TransactionForm from "../components/TransactionForm";
 import TransactionItem from "../components/TransactionItem";
 import ExpenseSummary from "../components/ExpenseSummary";
+import ChartData from "../components/ChartData";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ function Dashboard() {
       </section>
 
       <ExpenseSummary transactions={transactions} />
+
+      <ChartData transactions={transactions} />
 
       <TransactionForm />
 
