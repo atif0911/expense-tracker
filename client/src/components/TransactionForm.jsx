@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createTransaction,
@@ -10,6 +10,7 @@ function TransactionForm() {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
   const [type, setType] = useState("income");
+  const [category, setCategory] = useState("general");
 
   const dispatch = useDispatch();
 
@@ -18,6 +19,7 @@ function TransactionForm() {
   useEffect(() => {
     if (edit.isEdit === true) {
       setText(edit.transaction.text);
+      setCategory(edit.transaction.category);
       setAmount(edit.transaction.amount);
       setType(edit.transaction.type);
     }
@@ -30,13 +32,14 @@ function TransactionForm() {
       dispatch(
         updateTransaction({
           id: edit.transaction._id,
-          transactionData: { text, amount: +amount, type },
+          transactionData: { text, category, amount: +amount, type },
         })
       );
     } else {
       dispatch(
         createTransaction({
           text,
+          category,
           amount: +amount,
           type,
         })
@@ -44,6 +47,7 @@ function TransactionForm() {
     }
 
     setText("");
+    setCategory("general");
     setAmount(0);
     setType("expense");
   };
@@ -51,6 +55,7 @@ function TransactionForm() {
   const cancelEdit = () => {
     dispatch(editInactive());
     setText("");
+    setCategory("general");
     setAmount(0);
     setType("expense");
   };
@@ -67,6 +72,22 @@ function TransactionForm() {
             onChange={(e) => setText(e.target.value)}
             placeholder="e.g. Salary"
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <select
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="general">General</option>
+            <option value="salary">Salary</option>
+            <option value="rent">Rent</option>
+            <option value="food">Food</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="travel">Travel</option>
+            <option value="others">Others</option>
+          </select>
         </div>
         <div className="form-group">
           <label htmlFor="amount">Amount</label>

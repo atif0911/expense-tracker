@@ -18,9 +18,10 @@ exports.getTransactions = async (req, res, next) => {
 
 exports.addTransaction = async (req, res, next) => {
   try {
-    const { text, amount, type } = req.body;
+    const { text, category, amount, type } = req.body;
     const transactionData = {
       text,
+      category,
       amount,
       type,
       user: req.user.id,
@@ -46,7 +47,7 @@ exports.addTransaction = async (req, res, next) => {
   }
 };
 
-exports.updateTransaction = async (req, res, nect) => {
+exports.updateTransaction = async (req, res, next) => {
   try {
     const transaction = await Transaction.findById(req.params.id);
 

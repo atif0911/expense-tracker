@@ -11,6 +11,19 @@ const TransactionSchema = new mongoose.Schema({
     trim: true,
     required: [true, "Please add some text"],
   },
+  category: {
+    type: String,
+    trim: true,
+    enum: [
+      "general",
+      "salary",
+      "rent",
+      "food",
+      "entertainment",
+      "travel",
+      "others",
+    ],
+  },
   amount: {
     type: Number,
     required: [true, "Please add a positive or negative number"],

@@ -17,7 +17,18 @@ function TransactionItem({ transaction }) {
           {new Date(transaction.createdAt).toLocaleDateString("en-US")}
         </p>
       </div>
-
+      <span
+        style={{
+          fontSize: "0.7rem",
+          background: "#eee",
+          padding: "2px 5px",
+          borderRadius: "4px",
+          color: "#555",
+          marginRight: "5px",
+        }}
+      >
+        {transaction.category ? transaction.category.toUpperCase() : "GENERAL"}
+      </span>
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <span
           style={{
