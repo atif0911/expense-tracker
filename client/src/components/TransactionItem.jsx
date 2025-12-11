@@ -38,7 +38,7 @@ function TransactionItem({ transaction }) {
             marginRight: "5px",
           }}
         >
-          <FaEdit color="#333" />
+          <FaEdit color="var(--text-color)" cursor="pointer" />
         </button>
         <button
           onClick={() => dispatch(deleteTransaction(transaction._id))}

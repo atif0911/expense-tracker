@@ -83,7 +83,11 @@ function ExpenseSummary({ transactions }) {
 
       <div style={{ marginTop: "15px" }}>
         <h4>{filter.charAt(0).toUpperCase() + filter.slice(1)} Balance</h4>
-        <h1 style={{ color: Number(balance) >= 0 ? "black" : "red" }}>
+        <h1
+          style={{
+            color: Number(balance) < 0 ? "#e74c3c" : "var(--text-color)",
+          }}
+        >
           Rs. {balance}
         </h1>
       </div>
