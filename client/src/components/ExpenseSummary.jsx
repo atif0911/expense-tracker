@@ -52,7 +52,7 @@ function ExpenseSummary({ transactions }) {
       <h1
         style={{ color: Number(balance) < 0 ? "#e74c3c" : "var(--text-color)" }}
       >
-        ${balance}
+        Rs. {balance}
       </h1>
       <div className="filter-buttons">
         <button

@@ -1,6 +1,10 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createTransaction } from "../features/transactions/transactionSlice";
+import { useState,useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTransaction,
+  updateTransaction,
+  editInactive,
+} from "../features/transactions/transactionSlice";
 
 function TransactionForm() {
   const [text, setText] = useState("");
@@ -9,19 +13,46 @@ function TransactionForm() {
 
   const dispatch = useDispatch();
 
+  const { edit } = useSelector((state) => state.transactions);
+
+  useEffect(() => {
+    if (edit.isEdit === true) {
+      setText(edit.transaction.text);
+      setAmount(edit.transaction.amount);
+      setType(edit.transaction.type);
+    }
+  }, [edit]);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(
-      createTransaction({
-        text,
-        amount: +amount,
-        type,
-      })
-    );
+    if (edit.isEdit === true) {
+      dispatch(
+        updateTransaction({
+          id: edit.transaction._id,
+          transactionData: { text, amount: +amount, type },
+        })
+      );
+    } else {
+      dispatch(
+        createTransaction({
+          text,
+          amount: +amount,
+          type,
+        })
+      );
+    }
 
     setText("");
     setAmount(0);
+    setType("expense");
+  };
+
+  const cancelEdit = () => {
+    dispatch(editInactive());
+    setText("");
+    setAmount(0);
+    setType("expense");
   };
 
   return (
@@ -34,11 +65,11 @@ function TransactionForm() {
             id="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="e.g. Salary, Rent, Coffee"
+            placeholder="e.g. Salary"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="amount">Amount (Rs. )</label>
+          <label htmlFor="amount">Amount</label>
           <input
             type="number"
             id="amount"
@@ -53,16 +84,27 @@ function TransactionForm() {
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
           >
             <option value="expense">Expense</option>
             <option value="income">Income</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="form-group" style={{ display: "flex", gap: "10px" }}>
           <button className="btn btn-block" type="submit">
-            Add Transaction
+            {edit.isEdit ? "Update Transaction" : "Add Transaction"}
           </button>
+
+          {/* Show Cancel button only during edit */}
+          {edit.isEdit && (
+            <button
+              type="button"
+              className="btn btn-block"
+              style={{ background: "#777", border: "#777" }}
+              onClick={cancelEdit}
+            >
+              Cancel
+            </button>
+          )}
         </div>
       </form>
     </section>

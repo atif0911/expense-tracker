@@ -3,6 +3,10 @@ import axios from "axios";
 
 const initialState = {
   transactions: [],
+  edit: {
+    transaction: {},
+    isEdit: false,
+  },
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -84,11 +88,43 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
+export const updateTransaction = createAsyncThunk(
+  "transactions/update",
+  async ({ id, transactionData }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.put(
+        `/api/transactions/${id}`,
+        transactionData,
+        config
+      );
+      return response.data.data;
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.error) ||
+        error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const transactionSlice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
     reset: (state) => initialState,
+    editActive: (state, action) => {
+      state.edit = { transaction: action.payload, isEdit: true }
+    },
+    editInactive: (state) => {
+      state.edit = { transaction: {} , isEdit: false }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -126,9 +162,17 @@ export const transactionSlice = createSlice({
         state.transactions = state.transactions.filter(
           (transaction) => transaction._id !== action.payload
         );
+      })
+      .addCase(updateTransaction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.transactions = state.transactions.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        )
+        state.edit = { transaction: {} , isEdit: false}
       });
   },
 });
 
-export const { reset } = transactionSlice.actions;
+export const { reset, editActive, editInactive } = transactionSlice.actions;
 export default transactionSlice.reducer;

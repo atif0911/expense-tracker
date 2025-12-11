@@ -1,6 +1,9 @@
 import { useDispatch } from "react-redux";
-import { deleteTransaction } from "../features/transactions/transactionSlice";
-import { FaTimes } from "react-icons/fa";
+import {
+  deleteTransaction,
+  editActive,
+} from "../features/transactions/transactionSlice";
+import { FaTimes, FaEdit } from "react-icons/fa";
 
 function TransactionItem({ transaction }) {
   const dispatch = useDispatch();
@@ -22,8 +25,21 @@ function TransactionItem({ transaction }) {
             color: transaction.type === "income" ? "green" : "red",
           }}
         >
-          {transaction.type === "income" ? "+" : "-"}{transaction.amount}
+          {transaction.type === "income" ? "+" : "-"}Rs. {transaction.amount}
         </span>
+        {/* EDIT BUTTON */}
+        <button
+          onClick={() => dispatch(editActive(transaction))}
+          className="edit-btn"
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            marginRight: "5px",
+          }}
+        >
+          <FaEdit color="#333" />
+        </button>
         <button
           onClick={() => dispatch(deleteTransaction(transaction._id))}
           className="close"
